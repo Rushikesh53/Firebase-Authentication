@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="registrationForm">
+        Registration <br>
+        <label for="email">email</label>
+        <input type="email" name="email" id="email" required>
+
+        <label for="password">password</label>
+        <input type="password" name="password" id="password" required>
+
+        <button type="button" id="register" class="register" >register</button>
+    </form>
+
+    <br> <br>
+
+    <form id="loginForm">
+        Login <br>
+        <label for="email">email</label>
+        <input type="email" name="email" id="login_email" required>
+
+        <label for="password">password</label>
+        <input type="password" name="password" id="login_password" required>
+
+        <button type="button" id="login" class="login">login</button>
+    </form>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyCtPp_AMJ3JX1k4uHO2_xct-9tMstebx74",
+          authDomain: "test2-4e078.firebaseapp.com",
+          projectId: "test2-4e078",
+          storageBucket: "test2-4e078.appspot.com",
+          messagingSenderId: "282329786586",
+          appId: "1:282329786586:web:b163d56be78dc935a15de3",
+          measurementId: "G-FSR4HXX811"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        console.log(app);
+        const auth = getAuth();
+
+
+	//----- New Registration code start	  
+	document.getElementById("register").addEventListener("click", function() {
+		var email =  document.getElementById("email").value;
+		  var password = document.getElementById("password").value;
+		  //For new registration
+		  createUserWithEmailAndPassword(auth, email, password)
+		  .then((userCredential) => {
+		    // Signed in 
+		    const user = userCredential.user;
+		    console.log(user);
+		    alert("Registration successfully!!");
+		    // ...
+		  })
+		  .catch((error) => {
+		    const errorCode = error.code;
+		    const errorMessage = error.message;
+		    // ..
+		    console.log(errorMessage);
+		    alert(error);
+		});		  		  
+	  });
+	  //----- End
+	  
+	  //----- Login code start	  
+	  document.getElementById("login").addEventListener("click", function() {
+		  var email =  document.getElementById("login_email").value;
+		  var password = document.getElementById("login_password").value;
+		  
+		  signInWithEmailAndPassword(auth, email, password)
+		  .then((userCredential) => {
+		    // Signed in 
+		    const user = userCredential.user;
+		    console.log(user);
+		    alert(user.email+" Login successfully!!!");
+		    document.getElementById('logout').style.display = 'block';
+		    // ...
+		})
+		  .catch((error) => {
+		    const errorCode = error.code;
+		    const errorMessage = error.message;
+		    console.log(errorMessage);
+		    alert(errorMessage);
+		  });		  		  
+	  });
+	  //----- End
+
+
+        // // Registration Function
+        // function register() {
+        //     const email = document.getElementById('email').value;
+        //     const password = document.getElementById('password').value;
+
+        //     firebase.auth().createUserWithEmailAndPassword(email, password)
+        //     .then((userCredential) => {
+        //         // Registration successful
+        //         const user = userCredential.user;
+        //         console.log('User registered:', user);
+        //         alert("Registered");
+        //     })
+        //     .catch((error) => {
+        //         // Handle errors
+        //         const errorCode = error.code;
+        //         const errorMessage = error.message;
+        //         console.error('Registration error:', errorCode, errorMessage);
+        //     });
+        // }
+
+        // // Login Function
+        // function login() {
+        //     const email = document.getElementById('loginEmail').value;
+        //     const password = document.getElementById('loginPassword').value;
+
+        //     firebase.auth().signInWithEmailAndPassword(email, password)
+        //     .then((userCredential) => {
+        //         // Login successful
+        //         const user = userCredential.user;
+        //         console.log('User logged in:', user);
+        //         alert("Login");
+        //     })
+        //     .catch((error) => {
+        //         // Handle errors
+        //         const errorCode = error.code;
+        //         const errorMessage = error.message;
+        //         console.error('Login error:', errorCode, errorMessage);
+        //     });
+        // }
+       
+
+
+
+        // const auth = getAuth();
+        // signInWithEmailAndPassword(auth, email, password)
+        // .then((userCredential) => {
+        //     // Signed in 
+        //     const user = userCredential.user;
+        //     // ...
+        // })
+        // .catch((error) => {
+        //     const errorCode = error.code;
+        //     const errorMessage = error.message;
+        // });
+      </script>
+</body>
+</html>
